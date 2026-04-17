@@ -27,6 +27,7 @@ export default function ShikiEditor() {
 	const [opacity, setOpacity] = useLocalStorage<number>('opacity', 0.8)
 	const [title, setTitle] = useLocalStorage<string>('title')
 	const [background, setBackground] = useLocalStorage<string>('background')
+	const [alias, setAlias] = useLocalStorage<string>('alias', '/')
 
 	const [colorScheme, setColorScheme] = useLocalStorage<'light' | 'dark'>(
 		'color-scheme',
@@ -48,6 +49,19 @@ export default function ShikiEditor() {
 			setHtml(html)
 		})
 	}, [language, code, theme, setColorScheme])
+
+	const changesAlias = (e: React.ChangeEvent<HTMLInputElement>) => {
+		let newValue = e.target.value
+		newValue.startsWith('/ ')
+		if (newValue.endsWith(' ')) {
+			newValue.endsWith('/ ')
+			newValue = newValue.trim() + '/'
+		}
+		if (!newValue) {
+			newValue = newValue.trim() + '/'
+		}
+		setAlias(newValue)
+	}
 
 	useEffect(() => {
 		if (theme) return
@@ -93,7 +107,7 @@ export default function ShikiEditor() {
 					<Brush
 						size={36}
 						strokeWidth={1}
-						className="text-neutral-300 dark:text-neutral-900  animate-pulse"
+						className="text-neutral-300 dark:text-neutral-900 animate-pulse"
 					/>
 				) : (
 					<section className="zoom-sm border border-neutral-200 dark:border-neutral-700 rounded-2xl overflow-hidden">
@@ -126,15 +140,25 @@ export default function ShikiEditor() {
 							>
 								<header className="absolute top-2 w-full z-10 flex items-center px-2">
 									{layout === 2 && (
-										<input
-											type="text"
-											placeholder="code.extinct"
-											value={title ?? ''}
-											onChange={(e) =>
-												setTitle(e.target.value)
-											}
-											className="w-full text-center text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
-										/>
+										<>
+											<input
+												type="text"
+												placeholder="/ "
+												value={alias || ''}
+												onChange={changesAlias}
+												className="text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
+											/>
+
+											<input
+												type="text"
+												placeholder="code.extinct"
+												value={title ?? ''}
+												onChange={(e) =>
+													setTitle(e.target.value)
+												}
+												className="text-center text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
+											/>
+										</>
 									)}
 
 									{layout === 3 && (
@@ -167,6 +191,13 @@ export default function ShikiEditor() {
 												}
 												className="w-full text-center text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
 											/>
+											<input
+												type="text"
+												placeholder="/ "
+												value={alias || ''}
+												onChange={changesAlias}
+												className="text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
+											/>
 										</>
 									)}
 
@@ -187,6 +218,13 @@ export default function ShikiEditor() {
 												size={16}
 												strokeWidth={1.5}
 											/>
+											<input
+												type="text"
+												placeholder="/ "
+												value={alias || ''}
+												onChange={changesAlias}
+												className="text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
+											/>
 
 											<input
 												type="text"
@@ -195,7 +233,7 @@ export default function ShikiEditor() {
 												onChange={(e) =>
 													setTitle(e.target.value)
 												}
-												className="w-full text-center text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
+												className="text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
 											/>
 										</>
 									)}
@@ -225,7 +263,14 @@ export default function ShikiEditor() {
 												onChange={(e) =>
 													setTitle(e.target.value)
 												}
-												className="w-full text-left px-2 text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
+												className="text-left px-2 text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
+											/>
+											<input
+												type="text"
+												placeholder="/ "
+												value={alias || ''}
+												onChange={changesAlias}
+												className="text-sm bg-transparent outline-none text-neutral-500/65 placeholder:text-neutral-500/65 dark:text-neutral-300/65 dark:placeholder:text-neutral-300/65"
 											/>
 										</>
 									)}

@@ -1,15 +1,19 @@
 export const defaultCode = `import { Elysia, t } from 'elysia'
-import { openapi } from '@elysiajs/openapi'
+import { openapi } from '@elysiajs/openapi 
+import cookie from '@elysiajs/cookie''
 
 const app = new Elysia()
-    .use(openapi())
-    .get('/', { test: 'hello' })
-    .post('/json', ({ body, status }) => body, {
-        body: t.Object({
-            hello: t.String()
-        })
-    })
-    .listen(3000)`
+	.use(openapi())
+	.use(
+		cors({
+			origin: 'http://anixie.su',
+			credentials: true,
+			methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+			allowedHeaders: ['Content-Type', 'Authorization']
+		})
+	)
+	.use(cookie())
+	.get('/', () => 'Herta my beloved')`
 
 export const themes = [
 	'andromeeda',
