@@ -1,6 +1,6 @@
 export const defaultCode = `import { Elysia, t } from 'elysia'
-import { openapi } from '@elysiajs/openapi 
-import cookie from '@elysiajs/cookie''
+import { openapi } from '@elysiajs/openapi' 
+import cookie from '@elysiajs/cookie'
 
 const app = new Elysia()
 	.use(openapi())
